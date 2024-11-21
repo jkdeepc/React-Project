@@ -102,3 +102,25 @@ export const getMovie = (args) => {
       throw error
    });
   };
+
+// api/tmdb-api.js
+export const fetchNowPlayingMovies = async () => {
+  const apiKey = process.env.REACT_APP_TMDB_KEY;  
+
+  const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data && data.results) {
+      return data.results;
+    } else {
+      console.error("Error fetching data:", data);
+      return [];  
+    }
+  } catch (error) {
+    console.error("Error fetching now playing movies:", error);
+    return [];  
+  }
+};

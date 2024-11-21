@@ -4,7 +4,7 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
-
+import { Link } from 'react-router-dom'; 
 const HomePage = (props) => {
 
   const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
@@ -24,13 +24,19 @@ const HomePage = (props) => {
   const addToFavorites = (movieId) => true 
 
   return (
-    <PageTemplate
-      title="Discover Movies"
-      movies={movies}
-      action={(movie) => {
-        return <AddToFavoritesIcon movie={movie} />
-      }}
-    />
-);
+    <>
+      <PageTemplate
+        title="Discover Movies"
+        movies={movies}
+        action={(movie) => {
+          return <AddToFavoritesIcon movie={movie} />;
+        }}
+      />
+      
+      <div>
+        <Link to="/now-playing">check the upcoming movie</Link>
+      </div>
+    </>
+  );
 };
 export default HomePage;
