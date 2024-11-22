@@ -5,7 +5,7 @@ export const getUpcomingMovies = () => {
     .then((response) => {
       if (!response.ok) {
         return response.json().then((error) => {
-          throw new Error(error.status_message || "出现了问题");
+          throw new Error(error.status_message || "error");
         });
       }
       return response.json();
@@ -103,7 +103,7 @@ export const getMovie = (args) => {
    });
   };
 
-// api/tmdb-api.js
+
 export const fetchNowPlayingMovies = async () => {
   const apiKey = process.env.REACT_APP_TMDB_KEY;  
 
@@ -123,4 +123,54 @@ export const fetchNowPlayingMovies = async () => {
     console.error("Error fetching now playing movies:", error);
     return [];  
   }
+};
+
+export const fetchNowPlayingTV = async () => {
+  const apiKey = process.env.REACT_APP_TMDB_KEY;
+  const url = `https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=en-US&page=1`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data && data.results) {
+      return data.results;  
+    } else {
+      console.error("Error fetching data:", data);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching now playing TV shows:", error);
+    return [];
+  }
+};
+
+export const getTVShowDetails = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  )
+    .then((response) => response.json())
+    .catch((error) => {
+      throw error;
+    });
+};
+export const getTVShowRecommendations = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  )
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error("Error fetching TV show recommendations:", error);
+      throw error;
+    });
+};
+export const getTVShowCredits = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  )
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error("Error fetching TV show credits:", error);
+      throw error;
+    });
 };

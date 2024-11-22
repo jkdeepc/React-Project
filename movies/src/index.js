@@ -12,7 +12,8 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import UpcomingMoviesPage from './pages/UpcomingMoviesPage'; // 确保路径正确
 import NowPlayingPage from './pages/nowPlayingPage';
-
+import TVPage from './pages/TVPage'; 
+import TVShowDetailPage from './pages/TVShowDetailPage';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -37,7 +38,8 @@ const App = () => {
             <Route path="*" element={ <Navigate to="/" /> } />
             <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            
+            <Route path="/tv" element={<TVPage />} />
+            <Route path="/tv/:id" element={<TVShowDetailPage />} /> 
           </Routes>
         </MoviesContextProvider>
       </BrowserRouter>
