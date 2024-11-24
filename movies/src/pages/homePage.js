@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react"; 
 import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
+
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import { Link } from 'react-router-dom'; 
+import { MoviesContext } from '../contexts/moviesContext'; 
 
 const HomePage = () => {
   // 使用 react-query 获取电影数据
@@ -16,7 +18,7 @@ const HomePage = () => {
       cacheTime: 24 * 60 * 60 * 1000, // 缓存保留 24 小时
     }
   );
-
+  useContext(MoviesContext);
   if (isLoading) {
     return <Spinner />;
   }

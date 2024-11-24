@@ -1,6 +1,6 @@
 import React from "react";
-import { IconButton } from "@mui/material"; // 使用 Material-UI 的 IconButton
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"; // 导入图标
+import { IconButton } from "@mui/material";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 const AddToWatchlistIcon = ({ movie, onClick }) => {
   return (
