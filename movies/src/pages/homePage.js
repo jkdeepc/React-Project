@@ -3,15 +3,15 @@ import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-
+import { MoviesContext } from "../contexts/moviesContext";
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import { Link } from 'react-router-dom'; 
-import { MoviesContext } from '../contexts/moviesContext'; 
 
 const HomePage = () => {
   // 使用 react-query 获取电影数据
+  const { Page } = useContext(MoviesContext)
   const { data, error, isLoading, isError } = useQuery(
-    'discoverMovies', // 缓存键
+    ['discoverMovies', { Page }], 
     getMovies,
     {
       staleTime: 60 * 60 * 1000, // 缓存数据 1 小时

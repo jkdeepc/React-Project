@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid2";
+import Pagination from '@mui/material/Pagination';
+import { MoviesContext } from "../../contexts/moviesContext";
 
 function MovieListPageTemplate({ movies = [], title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
+  const {Page , handlePageChange} = useContext(MoviesContext);
+  
 
   let displayedMovies = movies
     .filter((m) => m && m.title && typeof m.title === "string") // 确保电影对象存在并且 title 是字符串（新增检查，避免 undefined 错误）
@@ -18,6 +22,8 @@ function MovieListPageTemplate({ movies = [], title, action }) {
     if (type === "name") setNameFilter(value);
     else setGenreFilter(value);
   };
+
+
 
   return (
     <Grid container spacing={3}>
@@ -47,6 +53,15 @@ function MovieListPageTemplate({ movies = [], title, action }) {
             <p>No movies found. Please adjust your filter.</p>
           )}
         </Grid>
+      </Grid>
+      <Grid container justifyContent="center" item xs={12} sx={{ marginTop: "20px" }}>
+        <Pagination 
+          count={25} 
+          page={Page} 
+          onChange={handlePageChange} 
+          showFirstButton 
+          showLastButton 
+        />
       </Grid>
     </Grid>
   );

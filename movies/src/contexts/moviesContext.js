@@ -20,6 +20,8 @@ const [watchlist, setWatchlist] = useState(() => {
   return savedWatchlist ? JSON.parse(savedWatchlist) : [];
 });
 
+const [Page, setPage] = useState(1); // 新增状态用于分页
+
 const addToFavorites = (movie) => {
   let newFavorites = [];
   if (!favorites.includes(movie.id)) {
@@ -49,6 +51,10 @@ const removeFromFavorites = (movie) => {
   setWatchlist(newWatchlist);
   localStorage.setItem("watchlist", JSON.stringify(newWatchlist));
   console.log("Updated Watchlist: ", newWatchlist); // 输出当前必看列表
+};
+
+const handlePageChange = (event, value) => {
+  setPage(value);
 };
 
 // 添加评论
@@ -84,6 +90,8 @@ useEffect(() => {
         myReviews,
         watchlist,
         addToWatchlist,
+        Page, 
+        handlePageChange,
       }}
     >
       {props.children}

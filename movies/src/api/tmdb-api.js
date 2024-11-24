@@ -15,9 +15,11 @@ export const getUpcomingMovies = () => {
     });
 };
 
-export const getMovies = () => {
+export const getMovies = (args) => {
+  const [, pagePart] = args.queryKey;
+    const { Page: page } = pagePart;
   return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
   ).then((response) => {
     if (!response.ok) {
       return response.json().then((error) => {
@@ -231,15 +233,15 @@ export const getTVGenres = () => {
     });
 };
 // api/tmdb-api.js
-export const getTVShowsByGenre = async (genreId, totalPages = 3) => {
+export const getTVShowsByGenre = async (genreId, year = "", language = "en-US", totalPages = 3) => {
   let allResults = [];
 
   for (let page = 1; page <= totalPages; page++) {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&with_genres=${genreId}&page=${page}`
+        `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&with_genres=${genreId}&first_air_date_year=${year}&page=${page}`
       );
-      
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.status_message || "Something went wrong");
